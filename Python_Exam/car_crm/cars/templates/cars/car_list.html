@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car List</title>
+    <style>
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            display: inline-block;
+            margin-right: 10px;
+        }
+        .text-center{
+            text-align: center;
+        }
+        a{
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    {% load static %}
+    <h1>Car List</h1>
+        {% for car_color in cars_colors %}
+            <button>
+                <a href="{% url 'show_car' car_color.color %}">Show {{ car_color.color }} cars </a>
+                <br>
+             </button>
+        {% endfor %}
+    <ul>
+        {% for car in cars %}
+        <li>
+            <img src="{% static 'images/' %}{{ car.color }}.png" alt="{{ car.name }} Image" width="100">
+            <div class="text-center">
+                <p>{{ car.name }} -- {{ car.id }}</p>
+                <button>
+                    <a href="#id"> < </a>
+                </button>
+                <button><a class="text-center" href="{% url 'car_detail' car.id %}">Details</a></button>
+                <button>
+                    <a href="#id"> > </a>
+                </button>
+            </div>
+        </li>
+    {% endfor %}
+    </ul>
+
+    <button><a href="{% url 'car_create' %}">Add New Car</a></button>
+</body>
+</html>
