@@ -1,0 +1,35 @@
+{% extends 'cars/index.html' %}
+{% load static %}
+{% block content %}
+    <h1>Car List</h1>
+    <button><a class="text-center" href="{% url 'car_list' %}">Back</a></button>
+        {% for car_color in cars_colors %}
+            <button>
+                <a href="{% url 'show_car' car_color.color %}">Show {{ car_color.color }} cars </a>
+                <br>
+             </button>
+        {% endfor %}
+    <ul>
+        {% for car in cars %}
+        <li>
+                {% if car.order != first_order %}
+                    <a href="{% url 'swap_cars' pk=car.id type='previous' color=car.color %}"> <button type="button" class="move-left"> < </button></a>
+                {% endif %}
+                <img src="{% static 'images/' %}{{ car.color }}.png" alt="{{ car.name }} Image" width="100">
+
+                {% if car.order != last_order %}
+                    <a href="{% url 'swap_cars' pk=car.id type='next' color=car.color %}"> <button type="button" class="move-right"> > </button></a>
+                {% endif %}
+                <button style="display:none" type="submit"></button>
+            <div class="text-center">
+                <p>{{ car.name }}</p>
+                <button><a class="text-center" href="{% url 'car_detail' car.id %}">Details</a></button>
+
+            </div>
+        </li>
+    {% endfor %}
+    </ul>
+
+    <button><a href="{% url 'car_create' %}">Add New Car</a></button>
+{% endblock %}
+

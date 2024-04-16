@@ -1,0 +1,18 @@
+{% extends 'cars/index.html' %}
+{% load static %}
+{% block content %}
+    <h1>Car Detail</h1>
+    <button><a class="text-center" href="{% url 'car_list' %}">Back</a></button>
+    <br>
+    <br>
+    <img src="{% static 'images/' %}{{ car.color }}.png" alt="{{ car.name }} Image" width="100">
+    <p><strong>Name:</strong> {{ car.name }}</p>
+    <p><strong>Color:</strong> {{ car.color }}</p>
+    <button><a href="{% url 'car_update' car.id %}">Edit</a></button>
+    <br>
+    <br>
+    <form action="{% url 'car_delete' car.id %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Delete">
+    </form>
+{% endblock %}
